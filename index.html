@@ -8,13 +8,20 @@
 <body>
 
   <div class="row" style="padding-top:40px">
+
     <div class="col c2"></div>
     <div class="col c8" align="center">
-      <textarea placeholder="Enter text" class="smooth" style="width:80%"></textarea>
       <div class="output row">
-        <div>Characters: <span id="characterCount">0</span></div>
-        <div>Words: <span id="wordCount">0</span></div>
+        <div>
+          Characters: <span id="characterCount">0</span> /
+          Words: <span id="wordCount">0</span> /
+          Sentences: <span id="sentencesCount">0</span> /
+          Paragraphs: <span id="paragraphsCount">0</span>
+        </div>
       </div>
+
+      <textarea rows="10" placeholder="Enter text" class="smooth" style="width:80%"></textarea>
+
     </div>
     <div class="col c2"></div>
   </div>
@@ -26,7 +33,30 @@
 
     // counter logic
 
+    characterCount.innerHTML = input.value.length;
+
+    var words = input.value.match(/\b[-?(\w+)?]+\b/gi);
+    if(words){
+      wordCount.innerHTML = words.length;
+    } else {
+      wordCount.innerHTML = 0;
+    }
     // sentence count
+
+    if(words){
+      var sentences = input.value.split(/[.|!|?]+/g);
+      sentenceCount.innerHTML = sentences.length;
+    } else {
+      sentenceCount.innerHTML = 0;
+    }
+
+    // paragraph counter
+    if (words) {
+      var paragraphs = input.value.replace(/\n$/gm, '').split(/\n/);
+      paragraphCount.innerHTML = paragraphs.length;
+    } else {
+      paragraphCount.innerHTML = 0;
+    }
 
     // reading time calc
 
