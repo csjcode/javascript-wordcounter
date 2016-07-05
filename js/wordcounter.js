@@ -12,8 +12,20 @@
   function doSomethingWithSelectedText(sentenceId) {
       var selectedText = getSelectedText();
       if (selectedText) {
-          alert("Added to answer key: \n" + selectedText);
-          answerKey.innerHTML = sentenceId + ': ' + selectedText + '<br />';
+
+          var selectedTextCount = selectedText.length;
+          var selectedTextCountUnderscores = selectedTextCount + 1;
+          var selectedTextBlanks = Array(selectedTextCountUnderscores).join("_");
+
+          sentenceIdNum = sentenceId.replace(/sentence/, '');
+          var sentenceText = document.getElementById(sentenceId).innerText;
+          var sentenceTextNew = sentenceText.replace(selectedText,selectedTextBlanks);
+          document.getElementById(sentenceId).innerText = sentenceTextNew;
+
+
+          alert("Added to answer key: \n" + selectedText + ' ' + sentenceId);
+          var sentenceIndex = sentenceText.indexOf(selectedText);
+          answerKey.innerHTML = sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />';
           return;
           // return selectedText;
       }
@@ -22,6 +34,8 @@
 
   var input = document.querySelectorAll('textarea')[0];
   input.addEventListener('keyup', function() {
+
+  var sentenceOutput ='';
 
     // counter logic
 
@@ -39,7 +53,7 @@
       var sentences = input.value.split(/[.|!|?]+/g);
       sentenceCount.innerHTML = sentences.length;
 
-      var sentenceOutput = '<h4 align="center">Line-by-Line Sentence Output</h4>';
+      sentenceOutput = '<h4 align="center">Line-by-Line Sentence Output</h4>';
       var arrSentencesAll = [];
 
       // print sentences individually for Sentence output
@@ -66,7 +80,7 @@
       }
 
     } else {
-      var sentenceOutput ='';
+
       sentenceCount.innerHTML = 0;
     }
 
