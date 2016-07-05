@@ -10,7 +10,7 @@
   <div class="row" style="padding-top:20px">
 
     <div class="col c1">&nbsp;</div>
-    <div class="col c8" align="center">
+    <div class="col c7" align="center">
 
       <h3>Word Counter (Javascript)</h3>
 
@@ -26,15 +26,43 @@
       </div>
 
       <div style="padding-top:20px">
-        <span id="sentencesOutput" style="display:inline-block; text-align:left"></span>
+        <div id="sentencesOutput" style="display:inline-block; text-align:left"></div>
       </div>
 
     </div>
-    <div class="col c3">&nbsp;</div>
+    <div class="col c4">
+      <div id="answerKey">
+
+      </div>
+
+    </div>
   </div>
 
 
 <script>
+
+  function getSelectedText() {
+      var text = "";
+      if (typeof window.getSelection != "undefined") {
+          text = window.getSelection().toString();
+      } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
+          text = document.selection.createRange().text;
+      }
+      return text;
+  }
+
+  function doSomethingWithSelectedText() {
+      var selectedText = getSelectedText();
+      if (selectedText) {
+          alert("Got selected text " + selectedText);
+          answerKey.innerHTML = selectedText + '<br />';
+          return selectedText;
+      }
+
+  }
+
+
+
   var input = document.querySelectorAll('textarea')[0];
   input.addEventListener('keyup', function() {
 
@@ -55,12 +83,26 @@
       sentenceCount.innerHTML = sentences.length;
 
       var sentenceOutput = '<h4 align="center">Sentence Output</h4>';
+      var arrSentencesAll = [];
+
+      // print sentences individually for Sentence output
 
       for (i=0; i < sentences.length; i++) {
         var i_adj_count = i+1;
-        sentenceOutput += '<b>[' + i_adj_count + ']</b> ' + sentences[i] + '<br /><br />';
+        var sentenceOutputOneLine = '<b>[' + i_adj_count + ']</b> ' + sentences[i] + '<br /><br />';
+
+        arrSentencesAll.push(sentenceOutputOneLine);
       }
-      sentencesOutput.innerHTML = sentenceOutput;
+
+      var strSentencesAll = arrSentencesAll.join('');
+
+
+      sentencesOutput.innerHTML = '<div id="sentenceLines">' + strSentencesAll + '</div>';
+      document.getElementById("sentencesOutput").onmouseup = doSomethingWithSelectedText;
+
+
+
+      // document.onmouseup = doSomethingWithSelectedText();
 
       // var sentenceOutput = '<h4 align="center">Sentence Output</h4>' + sentences.join("<br><br>");
       // sentencesOutput.innerHTML = sentenceOutput;
