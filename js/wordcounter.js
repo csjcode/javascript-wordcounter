@@ -9,12 +9,13 @@
       return text;
   }
 
-  function doSomethingWithSelectedText() {
+  function doSomethingWithSelectedText(sentenceId) {
       var selectedText = getSelectedText();
       if (selectedText) {
-          alert("Got selected text " + selectedText);
-          answerKey.innerHTML = selectedText + '<br />';
-          return selectedText;
+          alert("Added to answer key: \n" + selectedText);
+          answerKey.innerHTML = sentenceId + ': ' + selectedText + '<br />';
+          return;
+          // return selectedText;
       }
 
   }
@@ -45,7 +46,11 @@
 
       for (i=0; i < sentences.length; i++) {
         var i_adj_count = i+1;
-        var sentenceOutputOneLine = '<b>[' + i_adj_count + ']</b> ' + sentences[i] + '<br /><br />';
+        var currentCurrentSentence = sentences[i];
+
+        currentCurrentSentence = currentCurrentSentence.replace(/\[[0-9]+\]/, '');
+
+        var sentenceOutputOneLine = '<div class="individualSentence" id="sentence' + i + '"><b>[' + i_adj_count + ']</b> ' + currentCurrentSentence + '. </div>';
 
         arrSentencesAll.push(sentenceOutputOneLine);
       }
@@ -53,12 +58,12 @@
       var strSentencesAll = arrSentencesAll.join('');
       strSentencesAll = sentenceOutput + strSentencesAll;
       sentencesOutput.innerHTML = '<div id="sentenceLines">' + strSentencesAll + '</div>';
-      document.getElementById("sentencesOutput").onmouseup = doSomethingWithSelectedText;
 
-
-      // var sentenceOutput = '<h4 align="center">Sentence Output</h4>' + sentences.join("<br><br>");
-      // sentencesOutput.innerHTML = sentenceOutput;
-
+      var individualSentenceList = document.getElementsByClassName("individualSentence");
+      var individualSentenceListCount = individualSentenceList.length;
+      for (var k = 0; k <= individualSentenceListCount; k++) {
+        document.getElementById("sentence"+k).addEventListener("mouseup",function(){doSomethingWithSelectedText(this.id);});
+      }
 
     } else {
       var sentenceOutput ='';
