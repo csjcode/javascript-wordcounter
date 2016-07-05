@@ -7,10 +7,13 @@
 </head>
 <body>
 
-  <div class="row" style="padding-top:40px">
+  <div class="row" style="padding-top:20px">
 
     <div class="col c1">&nbsp;</div>
     <div class="col c8" align="center">
+
+      <h3>Word Counter (Javascript)</h3>
+
       <div class="output">
           Characters: <span id="characterCount">0</span> /
           Words: <span id="wordCount">0</span> /
@@ -22,7 +25,7 @@
         <textarea rows="10" placeholder="Enter text" class="smooth" style="width:80%;"></textarea>
       </div>
 
-      <div style="padding-top:10px">
+      <div style="padding-top:20px">
         <span id="sentencesOutput" style="display:inline-block; text-align:left"></span>
       </div>
 
@@ -50,9 +53,20 @@
     if(words){
       var sentences = input.value.split(/[.|!|?]+/g);
       sentenceCount.innerHTML = sentences.length;
-      var sentenceOutput = sentences.join("<br><br>");
-      sentencesOutput.innerHTML = sentenceOutput
+
+      var sentenceOutput = '<h4 align="center">Sentence Output</h4>';
+
+      for (i=0; i < sentences.length; i++) {
+        var i_adj_count = i+1;
+        sentenceOutput += '<b>[' + i_adj_count + ']</b> ' + sentences[i] + '<br /><br />';
+      }
+      sentencesOutput.innerHTML = sentenceOutput;
+
+      // var sentenceOutput = '<h4 align="center">Sentence Output</h4>' + sentences.join("<br><br>");
+      // sentencesOutput.innerHTML = sentenceOutput;
+
     } else {
+      var sentenceOutput ='';
       sentenceCount.innerHTML = 0;
     }
 
@@ -63,6 +77,8 @@
     } else {
       paragraphCount.innerHTML = 0;
     }
+
+    // proper nouns
 
     // reading time calc
 
