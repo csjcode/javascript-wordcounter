@@ -9,21 +9,25 @@
 
   <div class="row" style="padding-top:40px">
 
-    <div class="col c2"></div>
+    <div class="col c1">&nbsp;</div>
     <div class="col c8" align="center">
-      <div class="output row">
-        <div>
+      <div class="output">
           Characters: <span id="characterCount">0</span> /
           Words: <span id="wordCount">0</span> /
-          Sentences: <span id="sentencesCount">0</span> /
-          Paragraphs: <span id="paragraphsCount">0</span>
-        </div>
+          Sentences: <span id="sentenceCount">0</span> /
+          Paragraphs: <span id="paragraphCount">0</span>
       </div>
 
-      <textarea rows="10" placeholder="Enter text" class="smooth" style="width:80%"></textarea>
+      <div style="padding-top:20px">
+        <textarea rows="10" placeholder="Enter text" class="smooth" style="width:80%;"></textarea>
+      </div>
+
+      <div style="padding-top:10px">
+        <span id="sentencesOutput" style="display:inline-block; text-align:left"></span>
+      </div>
 
     </div>
-    <div class="col c2"></div>
+    <div class="col c3">&nbsp;</div>
   </div>
 
 
@@ -46,6 +50,8 @@
     if(words){
       var sentences = input.value.split(/[.|!|?]+/g);
       sentenceCount.innerHTML = sentences.length;
+      var sentenceOutput = sentences.join("<br><br>");
+      sentencesOutput.innerHTML = sentenceOutput
     } else {
       sentenceCount.innerHTML = 0;
     }
