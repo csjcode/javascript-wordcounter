@@ -1,6 +1,7 @@
 
   function getSelectedText() {
       var text = "";
+
       if (typeof window.getSelection != "undefined") {
           text = window.getSelection().toString();
       } else if (typeof document.selection != "undefined" && document.selection.type == "Text") {
@@ -20,18 +21,23 @@
           sentenceIdNum = sentenceId.replace(/sentence/, '');
           var sentenceText = document.getElementById(sentenceId).innerText;
           var sentenceTextNew = sentenceText.replace(selectedText,selectedTextBlanks);
-          document.getElementById(sentenceId).innerText = sentenceTextNew;
+          sentenceTextNew = document.getElementById(sentenceId).innerText;
+          var answerKeyNew = document.getElementById(sentenceId).innerText;
 
 
           alert("Added to answer key: \n" + selectedText + ' ' + sentenceId);
           var sentenceIndex = sentenceText.indexOf(selectedText);
-          answerKey.innerHTML = sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />';
+
+          arrAnswerKey.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />');
+          answerKey.innerHTML = arrAnswerKey.join('');
+          // answerKey.innerHTML = sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />';
           return;
           // return selectedText;
       }
 
   }
 
+  var arrAnswerKey = [];
   var input = document.querySelectorAll('textarea')[0];
   input.addEventListener('keyup', function() {
 
