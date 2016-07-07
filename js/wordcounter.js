@@ -31,7 +31,7 @@ function doSomethingWithSelectedText(sentenceId) {
         var answerKeyNew = document.getElementById(sentenceId).innerText;
 
 
-        alert("Added to answer key: \n" + selectedText + ' ' + sentenceId);
+        // alert("Added to answer key: \n" + selectedText + ' ' + sentenceId);
         var sentenceIndex = sentenceText.indexOf(selectedText);
 
         arrAnswerKey.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />');
