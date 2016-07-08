@@ -34,8 +34,9 @@ function doSomethingWithSelectedText(sentenceId) {
         // alert("Added to answer key: \n" + selectedText + ' ' + sentenceId);
         var sentenceIndex = sentenceText.indexOf(selectedText);
 
-        arrAnswerKey.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />');
-        answerKey.innerHTML = arrAnswerKey.join('');
+        arrAnswerKey.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText);
+        arrAnswerKeyDisplay.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />');
+        answerKey.innerHTML = arrAnswerKeyDisplay.join('');
         // answerKey.innerHTML = sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />';
         return;
         // return selectedText;
@@ -44,6 +45,7 @@ function doSomethingWithSelectedText(sentenceId) {
 }
 
 var arrAnswerKey = [];
+var arrAnswerKeyDisplay = [];
 var input = document.querySelectorAll('textarea')[0];
 input.addEventListener('keyup', function() {
 
