@@ -14,7 +14,7 @@ function getSelectedText() {
     return text;
 }
 
-function doSomethingWithSelectedText(sentenceId) {
+function doSomethingWithSelectedText(sentenceIdRaw) {
 
     "use strict";
     var selectedText = getSelectedText();
@@ -24,19 +24,31 @@ function doSomethingWithSelectedText(sentenceId) {
         var selectedTextCountUnderscores = selectedTextCount + 1;
         var selectedTextBlanks = new Array(selectedTextCountUnderscores).join("_");
 
-        var sentenceIdNum = sentenceId.replace(/sentence/, '');
-        var sentenceText = document.getElementById(sentenceId).innerText;
+        var sentenceIdNum = sentenceIdRaw.replace(/sentence/, '');
+        var sentenceText = document.getElementById(sentenceIdRaw).innerText;
         var sentenceTextNew = sentenceText.replace(selectedText,selectedTextBlanks);
-        sentenceTextNew = document.getElementById(sentenceId).innerText;
-        var answerKeyNew = document.getElementById(sentenceId).innerText;
+        sentenceTextNew = document.getElementById(sentenceIdRaw).innerText;
+        var answerKeyNew = document.getElementById(sentenceIdRaw).innerText;
 
 
-        // alert("Added to answer key: \n" + selectedText + ' ' + sentenceId);
         var sentenceIndex = sentenceText.indexOf(selectedText);
 
-        arrAnswerKey.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText);
+        // arrAnswerKey.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText);
+
+        objAnswerKey={};
+        objAnswerKey.sentenceId = sentenceIdNum;
+        objAnswerKey.wordIndex = sentenceIndex;
+        objAnswerKey.selectedText = selectedText;
+
+        arrAnswerKey.push(objAnswerKey);
+
+        var AnswerKeyJSON = JSON.stringify(arrAnswerKey);
+
         arrAnswerKeyDisplay.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />');
+
         answerKey.innerHTML = arrAnswerKeyDisplay.join('');
+        answerKeyJSON.innerHTML = '<h3>JSON:</h3>' + AnswerKeyJSON;
+
         // answerKey.innerHTML = sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />';
         return;
         // return selectedText;
@@ -44,12 +56,15 @@ function doSomethingWithSelectedText(sentenceId) {
 
 }
 
+
 var arrAnswerKey = [];
+var objAnswerKey = {};
 var arrAnswerKeyDisplay = [];
 var input = document.querySelectorAll('textarea')[0];
+
 input.addEventListener('keyup', function() {
 
-var sentenceOutput ='';
+  var sentenceOutput ='';
 
   // counter logic
 
@@ -92,6 +107,8 @@ var sentenceOutput ='';
     for (var k = 0; k <= individualSentenceListCount; k++) {
       document.getElementById("sentence"+k).addEventListener("mouseup",function(){doSomethingWithSelectedText(this.id);});
     }
+
+    document.getElementById("textarea").disabled = true;
 
   } else {
 
