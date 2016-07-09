@@ -23,33 +23,30 @@ function doSomethingWithSelectedText(sentenceIdRaw) {
         var selectedTextCount = selectedText.length;
         var selectedTextCountUnderscores = selectedTextCount + 1;
         var selectedTextBlanks = new Array(selectedTextCountUnderscores).join("_");
+        selectedTextBlanks = selectedTextBlanks.slice(0, -1);
 
         var sentenceIdNum = sentenceIdRaw.replace(/sentence/, '');
         var sentenceText = document.getElementById(sentenceIdRaw).innerText;
         var sentenceTextNew = sentenceText.replace(selectedText,selectedTextBlanks);
-        sentenceTextNew = document.getElementById(sentenceIdRaw).innerText;
+        document.getElementById(sentenceIdRaw).innerText = sentenceTextNew + " ";
         var answerKeyNew = document.getElementById(sentenceIdRaw).innerText;
 
 
         var sentenceIndex = sentenceText.indexOf(selectedText);
 
-        // arrAnswerKey.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText);
-
+        // Setup AnswerKey object to add to AnswerKey list
         objAnswerKey={};
         objAnswerKey.sentenceId = sentenceIdNum;
         objAnswerKey.wordIndex = sentenceIndex;
         objAnswerKey.selectedText = selectedText;
 
         arrAnswerKey.push(objAnswerKey);
-
         var AnswerKeyJSON = JSON.stringify(arrAnswerKey);
-
         arrAnswerKeyDisplay.push(sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />');
 
         answerKey.innerHTML = arrAnswerKeyDisplay.join('');
         answerKeyJSON.innerHTML = '<h3>JSON:</h3>' + AnswerKeyJSON;
 
-        // answerKey.innerHTML = sentenceIdNum + ':' + sentenceIndex + ' - ' + selectedText + '<br />';
         return;
         // return selectedText;
     }
